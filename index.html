@@ -3,11 +3,13 @@
 <head>
 <title>Untuk Nita Putri Sari Siregar ❤️</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
 <style>
 
 body{
 margin:0;
-font-family:Arial;
+font-family:'Poppins',sans-serif;
 text-align:center;
 color:white;
 background: linear-gradient(45deg,#ff6a88,#ff99ac,#ffc3d1);
@@ -22,16 +24,18 @@ margin-top:200px;
 
 /* tombol */
 button{
-padding:15px 30px;
+padding:15px 35px;
 font-size:22px;
 border:none;
 border-radius:12px;
 background:#ff4d6d;
 color:white;
 cursor:pointer;
+transition:0.3s;
 }
 
 button:hover{
+transform:scale(1.1);
 background:#ff1e4d;
 }
 
@@ -39,17 +43,31 @@ background:#ff1e4d;
 #pesan{
 display:none;
 margin-top:40px;
+animation:fadeUp 1.2s ease;
+}
+
+@keyframes fadeUp{
+0%{
+opacity:0;
+transform:translateY(40px);
+}
+100%{
+opacity:1;
+transform:translateY(0);
+}
 }
 
 /* kotak pesan */
 .box{
-background:rgba(0,0,0,0.5);
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(10px);
 padding:30px;
 border-radius:20px;
 width:60%;
 margin:auto;
 font-size:20px;
 line-height:1.6;
+box-shadow:0 10px 40px rgba(0,0,0,0.4);
 position:relative;
 z-index:10;
 }
@@ -60,6 +78,11 @@ width:220px;
 border-radius:20px;
 margin-bottom:20px;
 box-shadow:0 5px 20px rgba(0,0,0,0.5);
+transition:transform 0.4s;
+}
+
+.foto:hover{
+transform:scale(1.08);
 }
 
 /* love jatuh */
@@ -95,7 +118,6 @@ opacity:0;
 
 <body>
 
-<!-- halaman awal -->
 <div id="awal">
 
 <h1>💌 Ada Pesan Untukmu</h1>
@@ -104,12 +126,10 @@ opacity:0;
 
 </div>
 
-<!-- musik -->
 <audio id="musik">
 <source src="musik.mp3" type="audio/mpeg">
 </audio>
 
-<!-- isi pesan -->
 <div id="pesan">
 
 <h1>❤️ Untuk Nita Putri Sari Siregar ❤️</h1>
@@ -140,7 +160,7 @@ Terima kasih sudah hadir dalam hidupku.
 Semoga setiap langkah kita dipenuhi kebahagiaan.
 </p>
 
-<p><b>Aku sayang kamu Nita ❤️</b></p>
+<p id="typing"></p>
 
 </div>
 
@@ -157,6 +177,20 @@ document.getElementById("pesan").style.display="block";
 var music=document.getElementById("musik");
 music.play();
 
+ketik();
+
+}
+
+/* efek mengetik */
+const text="Aku sayang kamu Nita ❤️";
+let i=0;
+
+function ketik(){
+if(i<text.length){
+document.getElementById("typing").innerHTML+=text.charAt(i);
+i++;
+setTimeout(ketik,70);
+}
 }
 
 /* love jatuh */
