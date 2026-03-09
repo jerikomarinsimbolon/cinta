@@ -11,14 +11,14 @@ body{
 margin:0;
 font-family:'Poppins',sans-serif;
 text-align:center;
-color:white;
-background: linear-gradient(45deg,#ff6a88,#ff99ac,#ffc3d1);
+background:white;
+color:black;
 min-height:100vh;
 overflow-x:hidden;
 }
 
-/* halaman awal */
-#awal{
+/* posisi slide */
+.slide{
 margin-top:200px;
 }
 
@@ -43,33 +43,17 @@ background:#ff1e4d;
 #pesan{
 display:none;
 margin-top:40px;
-animation:fadeUp 1.2s ease;
 }
 
-@keyframes fadeUp{
-0%{
-opacity:0;
-transform:translateY(40px);
-}
-100%{
-opacity:1;
-transform:translateY(0);
-}
-}
-
-/* kotak pesan */
+/* box pesan */
 .box{
-background:rgba(255,255,255,0.15);
-backdrop-filter:blur(10px);
+background:rgba(255,255,255,0.2);
 padding:30px;
 border-radius:20px;
 width:60%;
 margin:auto;
 font-size:20px;
 line-height:1.6;
-box-shadow:0 10px 40px rgba(0,0,0,0.4);
-position:relative;
-z-index:10;
 }
 
 /* foto */
@@ -77,31 +61,9 @@ z-index:10;
 width:220px;
 border-radius:20px;
 margin-bottom:20px;
-box-shadow:0 5px 20px rgba(0,0,0,0.5);
-transition:transform 0.4s;
 }
 
-.foto:hover{
-transform:scale(1.08);
-}
-
-/* love jatuh */
-.heart{
-position:fixed;
-top:-50px;
-color:red;
-font-size:25px;
-animation: fall 6s linear infinite;
-}
-
-/* bunga jatuh */
-.flower{
-position:fixed;
-top:-50px;
-font-size:25px;
-animation: fall 7s linear infinite;
-}
-
+/* animasi jatuh */
 @keyframes fall{
 0%{
 transform:translateY(-100px);
@@ -118,18 +80,42 @@ opacity:0;
 
 <body>
 
-<div id="awal">
-
-<h1>💌 Ada Pesan Untukmu</h1>
-
-<button onclick="bukaPesan()">Buka Pesan Cinta ❤️</button>
-
+<!-- SLIDE 1 -->
+<div id="hal1" class="slide">
+<h1>🙂</h1>
+<button onclick="hal2()">Tekan</button>
 </div>
 
+<!-- SLIDE 2 -->
+<div id="hal2" class="slide" style="display:none;">
+<h1>🤔</h1>
+<button onclick="hal3()">Hayoooo kenapa ditekan</button>
+</div>
+
+<!-- SLIDE 3 -->
+<div id="hal3" class="slide" style="display:none;">
+<h1>😜</h1>
+<button onclick="hal4()">Anda Kena Prank</button>
+</div>
+
+<!-- SLIDE 4 -->
+<div id="hal4" class="slide" style="display:none;">
+<h1>🙏</h1>
+<button onclick="hal5()">Tolong tekan sekali lagi please</button>
+</div>
+
+<!-- SLIDE 5 -->
+<div id="hal5" class="slide" style="display:none;">
+<h1>💌</h1>
+<button onclick="bukaPesan()">Buka Pesan Cinta ❤️</button>
+</div>
+
+<!-- AUDIO -->
 <audio id="musik">
 <source src="musik.mp3" type="audio/mpeg">
 </audio>
 
+<!-- PESAN -->
 <div id="pesan">
 
 <h1>❤️ Untuk Nita Putri Sari Siregar ❤️</h1>
@@ -145,19 +131,12 @@ hatiku selalu menemukan jalannya kembali kepadamu.
 </p>
 
 <p>
-Kamu seperti bunga yang membuat hariku selalu lebih indah 🌸
-Senyummu sederhana tapi mampu menenangkan hatiku.
-</p>
-
-<p>
-Aku mungkin tidak sempurna,
-tapi satu hal yang pasti:
-rasa sayangku kepadamu selalu tulus.
+Senyummu sederhana tapi selalu berhasil
+membuat hariku terasa lebih indah.
 </p>
 
 <p>
 Terima kasih sudah hadir dalam hidupku.
-Semoga setiap langkah kita dipenuhi kebahagiaan.
 </p>
 
 <p id="typing"></p>
@@ -168,20 +147,62 @@ Semoga setiap langkah kita dipenuhi kebahagiaan.
 
 <script>
 
+/* pindah slide */
+
+function hal2(){
+document.getElementById("hal1").style.display="none";
+document.getElementById("hal2").style.display="block";
+}
+
+function hal3(){
+document.getElementById("hal2").style.display="none";
+document.getElementById("hal3").style.display="block";
+}
+
+function hal4(){
+document.getElementById("hal3").style.display="none";
+document.getElementById("hal4").style.display="block";
+}
+
+function hal5(){
+document.getElementById("hal4").style.display="none";
+document.getElementById("hal5").style.display="block";
+}
+
 /* buka pesan */
+
+let animasiMulai=false;
+
 function bukaPesan(){
 
-document.getElementById("awal").style.display="none";
+document.getElementById("hal5").style.display="none";
 document.getElementById("pesan").style.display="block";
 
+/* ubah background romantis */
+document.body.style.background="linear-gradient(45deg,#ff6a88,#ff99ac,#ffc3d1)";
+document.body.style.color="white";
+
+/* putar musik */
 var music=document.getElementById("musik");
 music.play();
 
+/* mulai mengetik */
 ketik();
+
+/* mulai animasi bunga dan love */
+if(!animasiMulai){
+
+setInterval(createHeart,400);
+setInterval(createFlower,600);
+
+animasiMulai=true;
 
 }
 
-/* efek mengetik */
+}
+
+/* teks mengetik */
+
 const text="Aku sayang kamu Nita ❤️";
 let i=0;
 
@@ -194,42 +215,44 @@ setTimeout(ketik,70);
 }
 
 /* love jatuh */
+
 function createHeart(){
+
 const heart=document.createElement("div");
-heart.className="heart";
+
 heart.innerHTML="❤️";
 
+heart.style.position="fixed";
+heart.style.top="-50px";
 heart.style.left=Math.random()*100+"vw";
 heart.style.fontSize=(20+Math.random()*20)+"px";
-heart.style.animationDuration=(4+Math.random()*3)+"s";
+heart.style.animation="fall 6s linear";
 
 document.body.appendChild(heart);
 
-setTimeout(()=>{
-heart.remove();
-},7000);
+setTimeout(()=>{heart.remove();},6000);
+
 }
 
-setInterval(createHeart,400);
-
 /* bunga jatuh */
+
 function createFlower(){
+
 const flower=document.createElement("div");
-flower.className="flower";
+
 flower.innerHTML="🌸";
 
+flower.style.position="fixed";
+flower.style.top="-50px";
 flower.style.left=Math.random()*100+"vw";
 flower.style.fontSize=(20+Math.random()*20)+"px";
-flower.style.animationDuration=(5+Math.random()*4)+"s";
+flower.style.animation="fall 7s linear";
 
 document.body.appendChild(flower);
 
-setTimeout(()=>{
-flower.remove();
-},8000);
-}
+setTimeout(()=>{flower.remove();},7000);
 
-setInterval(createFlower,600);
+}
 
 </script>
 
